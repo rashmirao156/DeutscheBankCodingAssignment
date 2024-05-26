@@ -13,7 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "systemuser")
+@Table(name = "systemuser",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "userName")
+        })
 public class User {
 
     @Id
@@ -22,6 +25,9 @@ public class User {
 
     @Column(name = "userName")
     private String userName;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "role")
     private UserRole role;

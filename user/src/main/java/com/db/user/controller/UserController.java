@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Map;
+
 @RestController()
 public class UserController {
 
@@ -29,14 +32,13 @@ public class UserController {
     /**
      * API to get user details using user name.
      *
-     * @param userName userName
      * @return user object.
      */
-    @GetMapping("user/{userName}")
-    private User getUser(@PathVariable String userName) {
+    @PostMapping("user/authenticate")
+    private ResponseEntity<Map<String, String>> getUserToken(@RequestBody Map<String,String> input) {
 
         // Return user if user exists.
-        return userService.fetchUserByName(userName).orElseThrow(() -> new UserNotFoundException("User not found"));
-    }
+        String token = userService.authenticateUser(input.get("userName"), input.get("password"));
+        return ResponseEntity.ok(Collections.singletonMap("token", token));    }
 
 }
