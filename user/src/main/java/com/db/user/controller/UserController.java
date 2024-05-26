@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.InvalidKeyException;
 import java.util.Collections;
 import java.util.Map;
 
@@ -40,5 +41,17 @@ public class UserController {
         // Return user if user exists.
         String token = userService.authenticateUser(input.get("userName"), input.get("password"));
         return ResponseEntity.ok(Collections.singletonMap("token", token));    }
+
+/**
+ * API to validate user token and extract user role.
+ *
+ * @return user object.
+ */
+@PostMapping("user/validate")
+private ResponseEntity<String> validateToken(@RequestBody String token) throws InvalidKeyException {
+    String role = userService.validateUserToken(token);
+    return ResponseEntity.ok(role);
+
+}
 
 }

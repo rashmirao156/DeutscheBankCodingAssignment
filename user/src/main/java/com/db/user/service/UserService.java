@@ -11,6 +11,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.security.InvalidKeyException;
 import java.util.Optional;
 
 @Repository
@@ -59,4 +60,11 @@ public class UserService {
         }
     }
 
+    public String validateUserToken(String token) throws InvalidKeyException {
+
+            if(tokenProvider.validateToken(token)) {
+                return tokenProvider.getRole(token);
+            };
+            return null;
+    }
 }
