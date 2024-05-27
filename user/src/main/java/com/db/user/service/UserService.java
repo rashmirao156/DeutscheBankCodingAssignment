@@ -12,7 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.security.InvalidKeyException;
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserService {
@@ -41,14 +42,11 @@ public class UserService {
     }
 
     /**
-     * Get the user information using userName.
-     * @param userName userName.
-     * @return User object.
+     * authenticate a new user using username and password.
+     * @param username user name
+     * @param password login password.
+     * @return message.
      */
-    public Optional<User> fetchUserByName(String userName) {
-        return userRepository.findByUserName(userName);
-    }
-
     public String authenticateUser(String username, String password) {
         User user = userRepository.findByUserName(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -60,11 +58,18 @@ public class UserService {
         }
     }
 
-    public String validateUserToken(String token) throws InvalidKeyException {
+    /**
+     * check supplied for validity and return role if the token is valid.
+     * @param token token
+     * @return role.
+     * @throws InvalidKeyException e
+     */
+    public String validateUserToken(final String token) throws InvalidKeyException {
 
             if(tokenProvider.validateToken(token)) {
                 return tokenProvider.getRole(token);
             };
             return null;
     }
+
 }

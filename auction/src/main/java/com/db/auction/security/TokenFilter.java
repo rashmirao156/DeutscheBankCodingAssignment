@@ -19,8 +19,8 @@ import java.util.List;
 @Component
 public class TokenFilter extends OncePerRequestFilter {
 
-@Autowired
-TokenClient client;
+    @Autowired
+    TokenClient client;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

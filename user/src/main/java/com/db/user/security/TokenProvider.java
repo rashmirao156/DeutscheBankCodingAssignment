@@ -27,6 +27,13 @@ public class TokenProvider {
         byte[] keyBytes = Base64.getDecoder().decode(secretKey);
         key = Keys.hmacShaKeyFor(keyBytes);
     }
+
+    /**
+     * create JWT token.
+     * @param username username.
+     * @param role role.
+     * @return token.
+     */
     public String createToken(String username, String role) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role); // Add role to the token
@@ -41,15 +48,31 @@ public class TokenProvider {
                 .compact();
     }
 
+    /**
+     *  extract username from supplied token.
+     * @param token token value.
+     * @return username.
+     */
     public String getUsername(String token) {
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public String getRole(String token) {
+    /**
+     *  extract user role from supplied token.
+     * @param token
+     * @return
+     */
+    public String getRole(final String token) {
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().get("role", String.class);
     }
 
-    public boolean validateToken(String token) throws InvalidKeyException {
+    /**
+     *  validate the token for authenticity and expiry.
+     * @param token token.
+     * @return boolean flag.
+     * @throws InvalidKeyException e.
+     */
+    public boolean validateToken(final String token) throws InvalidTokenException {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());

@@ -1,0 +1,263 @@
+{
+	"info": {
+		"_postman_id": "59599e0f-103b-4572-96a9-349254648023",
+		"name": "DBassessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "165351"
+	},
+	"item": [
+		{
+			"name": "add user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"1005\",\r\n    \"password\":\"$Rain1\",\r\n    \"firstName\": \"Rashmi\",\r\n    \"lastName\":\"D\",\r\n    \"phone\":\"+49176\",\r\n    \"address\":\"BlankenBurger Strasse\",\r\n    \"role\": \"SELLER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"userName\":\"1004\",\r\n    \"password\":\"$Rain1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user/authenticate",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "payload",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDAyIiwicm9sZSI6IkJVWUVSIiwiaWF0IjoxNzE2NzMxNDExLCJleHAiOjE3MTY3MzUwMTF9.hdahXtXGwTNUHoVBNp3WSgTsc4fEDlbks0DtBbF0r1s",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "{}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"airpods pro\",\r\n    \"description\":\"2nd gen airpods pro\",\r\n    \"minimumPrice\":\"100.0\",\r\n    \"status\":\"ONGOING\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/products",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register a product for auction",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{SellerToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \"id\":\"1003\",\r\n    \"name\":\"airpods\",\r\n    \"description\":\"3rd gen airpods \",\r\n    \"minimumPrice\":\"80.0\",\r\n    \"status\":\"ONGOING\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/product/register",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"product",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "submit bid",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{BuyerToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \"id\":\"2\",\r\n    \"productId\":\"1003\",\r\n    \"biddingPrice\":\"120.0\",\r\n    \"buyerId\":\"1004\",\r\n    \"sellerId\":\"222\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/auction/bid",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"auction",
+						"bid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "end auction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDA1Iiwicm9sZSI6IlNFTExFUiIsImlhdCI6MTcxNjczNDU4OCwiZXhwIjoxNzE2NzM4MTg4fQ.RDSZeJTDQF5M9-pRJNdCPb0qsolEcZsle2-RQzJ33HQ"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/auction/end/1003",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"auction",
+						"end",
+						"1003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDA1Iiwicm9sZSI6IlNFTExFUiIsImlhdCI6MTcxNjczNTYyNywiZXhwIjoxNzE2NzM5MjI3fQ.FneBguV9h5mOpctLxIlnrul5Ex1gGPpL5mLER4Drmh4",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user/validate",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

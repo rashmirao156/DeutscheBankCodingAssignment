@@ -20,12 +20,27 @@ public class AuctionController {
     @Autowired
     ProductService productService;
 
+    /**
+     * API for buyer to submit bid.
+     *
+     * @param bid bid.
+     * @return message.
+     */
     @PostMapping("auction/bid")
-    private ResponseEntity<HttpStatus> submitBid(@RequestBody Bid bid) {
-        auctionService.submitBid(bid);
-        return new ResponseEntity<>(HttpStatus.OK);
+    private ResponseEntity<String> submitBid(@RequestBody Bid bid) {
+        Bid response = auctionService.submitBid(bid);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(String.format("successfully submitted bid with id {}", response.getId()));
     }
 
+    /**
+     * API used by seller to end the auction.
+     * Updates the product status as Completed.
+     * Fetches the highest Bid for product.
+     *
+     * @param productId product Id.
+     * @return Highest bid.
+     */
     @PostMapping("auction/end/{productId}")
     private Bid endBid(@PathVariable long productId) {
         productService.UpdateProductStatus(productId);

@@ -1,6 +1,5 @@
 package com.db.user.controller;
 
-import com.db.user.exception.UserNotFoundException;
 import com.db.user.model.User;
 import com.db.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,8 @@ public class UserController {
     }
 
     /**
-     * API to get user details using user name.
+     * API to authenticate user using username and password
+     * Returns JWT token upon successful authentication.
      *
      * @return user object.
      */
