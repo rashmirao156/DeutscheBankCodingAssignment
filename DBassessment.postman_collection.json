@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"userName\":\"1005\",\r\n    \"password\":\"$Rain1\",\r\n    \"firstName\": \"Rashmi\",\r\n    \"lastName\":\"D\",\r\n    \"phone\":\"+49176\",\r\n    \"address\":\"BlankenBurger Strasse\",\r\n    \"role\": \"SELLER\"\r\n}",
+					"raw": "{\r\n    \"userName\":\"2\",\r\n    \"password\":\"$Rain\",\r\n    \"firstName\": \"Rashmi\",\r\n    \"lastName\":\"D\",\r\n    \"phone\":\"+49176\",\r\n    \"address\":\"BlankenBurger Strasse\",\r\n    \"role\": \"SELLER\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \"userName\":\"1004\",\r\n    \"password\":\"$Rain1\"\r\n}",
+					"raw": "{\r\n   \"userName\":\"2\",\r\n    \"password\":\"$Rain\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -112,7 +112,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": ""
+						"value": "Bearer {{BuyerToken}}"
 					}
 				],
 				"body": {
@@ -125,13 +125,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:9090/products",
+					"raw": "localhost:9090/product/all",
 					"host": [
 						"localhost"
 					],
 					"port": "9090",
 					"path": [
-						"products"
+						"product",
+						"all"
 					]
 				}
 			},
@@ -147,12 +148,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{SellerToken}}"
+						"value": "Bearer {{SellerToken}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \"id\":\"1003\",\r\n    \"name\":\"airpods\",\r\n    \"description\":\"3rd gen airpods \",\r\n    \"minimumPrice\":\"80.0\",\r\n    \"status\":\"ONGOING\"\r\n}",
+					"raw": "{    \r\n    \"name\":\"airpods pro\",\r\n    \"description\":\"1st gen airpods \",\r\n    \"minimumPrice\":\"50.0\",\r\n    \"status\":\"ONGOING\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -180,12 +181,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{BuyerToken}}"
+						"value": "Bearer {{BuyerToken}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \"id\":\"2\",\r\n    \"productId\":\"1003\",\r\n    \"biddingPrice\":\"120.0\",\r\n    \"buyerId\":\"1004\",\r\n    \"sellerId\":\"222\"\r\n}",
+					"raw": "{    \"productId\":\"1\",\r\n    \"biddingPrice\":\"140.0\",\r\n    \"buyerId\":\"1\",\r\n    \"sellerId\":\"2\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -213,11 +214,11 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDA1Iiwicm9sZSI6IlNFTExFUiIsImlhdCI6MTcxNjczNDU4OCwiZXhwIjoxNzE2NzM4MTg4fQ.RDSZeJTDQF5M9-pRJNdCPb0qsolEcZsle2-RQzJ33HQ"
+						"value": "Bearer {{SellerToken}}"
 					}
 				],
 				"url": {
-					"raw": "localhost:9090/auction/end/1003",
+					"raw": "localhost:9090/auction/end/1",
 					"host": [
 						"localhost"
 					],
@@ -225,7 +226,7 @@
 					"path": [
 						"auction",
 						"end",
-						"1003"
+						"1"
 					]
 				}
 			},
@@ -238,7 +239,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDA1Iiwicm9sZSI6IlNFTExFUiIsImlhdCI6MTcxNjczNTYyNywiZXhwIjoxNzE2NzM5MjI3fQ.FneBguV9h5mOpctLxIlnrul5Ex1gGPpL5mLER4Drmh4",
+					"raw": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6IlNFTExFUiIsImlhdCI6MTcxNjg4OTc1MCwiZXhwIjoxNzE2ODkzMzUwfQ.9Bp3gcUEOqscstOuZTZcahjMNdmxo9ccwOSFjaYz8LM",
 					"options": {
 						"raw": {
 							"language": "text"

@@ -28,7 +28,7 @@ public class ProductService {
             product.setStatus(AuctionStatus.ONGOING);
             return productRepository.save(product);
         } catch (Exception e) {
-            throw new ProductServiceException(e.getMessage(), e);
+            throw new ProductServiceException(e.getMessage());
         }
     }
 
@@ -38,16 +38,11 @@ public class ProductService {
      * @return list of products.
      */
     public List<Product> getProducts() {
-        try {
-
-            final List<Product> products = productRepository.findAll();
-            // Filter products with status as "ongoing"
-            return products.stream()
-                    .filter(product -> AuctionStatus.ONGOING.equals(product.getStatus()))
-                    .toList();
-        } catch (Exception e) {
-            throw new ProductServiceException(e.getMessage(), e);
-        }
+        final List<Product> products = productRepository.findAll();
+        // Filter products with status as "ongoing"
+        return products.stream()
+                .filter(product -> AuctionStatus.ONGOING.equals(product.getStatus()))
+                .toList();
     }
 
     /**
@@ -56,13 +51,14 @@ public class ProductService {
      * @param productId id of the product.
      */
     public Long UpdateProductStatus(Long productId) {
-        try {
-            Product product = productRepository.getReferenceById(productId);
-            product.setStatus(AuctionStatus.COMPLETED);
-             productRepository.save(product);
-             return productId;
-        } catch (Exception e) {
-            throw new ProductServiceException(e.getMessage(), e);
+
+        Product product = productRepository.getReferenceById(productId);
+        if (product.getStatus().equals(AuctionStatus.COMPLETED)) {
+            throw new ProductServiceException("Auction has already ended for this product!");
         }
+        product.setStatus(AuctionStatus.COMPLETED);
+        productRepository.save(product);
+        return productId;
     }
+
 }

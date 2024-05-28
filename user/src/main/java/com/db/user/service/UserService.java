@@ -1,9 +1,10 @@
 package com.db.user.service;
 
 
+import com.db.user.enums.UserRole;
+import com.db.user.exception.UserException;
 import com.db.user.exception.UserNotFoundException;
 import com.db.user.model.User;
-import com.db.user.enums.UserRole;
 import com.db.user.repository.UserRepository;
 import com.db.user.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.security.InvalidKeyException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class UserService {
@@ -29,20 +28,26 @@ public class UserService {
 
     /**
      * Add a new user.
+     *
      * @param user user.
      * @return added user object.
      */
-    public User addUser(User user) {
+    public User addUser(User user) throws UserException  {
         //encrypt user password.
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (!(UserRole.BUYER).equals(user.getRole()) && !(UserRole.SELLER).equals(user.getRole())) {
-            throw new IllegalArgumentException("Invalid user role");
-        }
-      return  userRepository.save(user);
+
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            if (userRepository.findByUserName(user.getUserName()).isPresent()) {
+                throw new IllegalArgumentException("Username already present, Please try another username.");
+            }
+            if (!(UserRole.BUYER).equals(user.getRole()) && !(UserRole.SELLER).equals(user.getRole())) {
+                throw new IllegalArgumentException("Invalid user role");
+            }
+            return userRepository.save(user);
     }
 
     /**
      * authenticate a new user using username and password.
+     *
      * @param username user name
      * @param password login password.
      * @return message.
@@ -60,16 +65,18 @@ public class UserService {
 
     /**
      * check supplied for validity and return role if the token is valid.
+     *
      * @param token token
      * @return role.
      * @throws InvalidKeyException e
      */
     public String validateUserToken(final String token) throws InvalidKeyException {
 
-            if(tokenProvider.validateToken(token)) {
-                return tokenProvider.getRole(token);
-            };
-            return null;
+        if (tokenProvider.validateToken(token)) {
+            return tokenProvider.getRole(token);
+        }
+        ;
+        return null;
     }
 
 }

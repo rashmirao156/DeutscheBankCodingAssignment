@@ -17,6 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.db.auction.constants.TestConstants.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 public class ProductControllerTest {
+
 
     private MockMvc mockMvc;
 
@@ -37,59 +39,57 @@ public class ProductControllerTest {
     TokenClient tokenClient;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext).apply(springSecurity())
                 .build();
     }
 
 
-
-
     @Test
     public void testRegisterWithSellerRole() throws Exception {
-        when(tokenClient.validateToken(any())).thenReturn("SELLER");
+        when(tokenClient.validateToken(any())).thenReturn(SELLER);
         when(productService.registerProduct(any())).thenReturn(getProduct());
         String productJson = getRequest();
         mockMvc.perform(MockMvcRequestBuilders.post("/product/register")
-                        .header("Authorization", "Bearer sampleToken")
+                        .header(AUTHORIZATION, BEARER_SAMPLE_TOKEN)
 
-                        .contentType("application/json")
+                        .contentType(CONTENT_TYPE)
                         .content(productJson))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testRegisterWithBuyerRole() throws Exception {
-        when(tokenClient.validateToken(any())).thenReturn("BUYER");
+        when(tokenClient.validateToken(any())).thenReturn(BUYER);
         when(productService.registerProduct(any())).thenReturn(getProduct());
         String productJson = getRequest();
         mockMvc.perform(MockMvcRequestBuilders.post("/product/register")
-                        .header("Authorization", "Bearer sampleToken")
+                        .header(AUTHORIZATION, BEARER_SAMPLE_TOKEN)
 
-                        .contentType("application/json")
+                        .contentType(CONTENT_TYPE)
                         .content(productJson))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     public void testGetAllProductsWithSeller() throws Exception {
-        when(tokenClient.validateToken(any())).thenReturn("SELLER");
+        when(tokenClient.validateToken(any())).thenReturn(SELLER);
         when(productService.getProducts()).thenReturn(getProductList());
         String productJson = getRequest();
         mockMvc.perform(MockMvcRequestBuilders.get("/product/all")
-                        .header("Authorization", "Bearer sampleToken")
-                        )
+                        .header(AUTHORIZATION, BEARER_SAMPLE_TOKEN)
+                )
                 .andExpect(status().isForbidden());
     }
 
     @Test
     public void testGetAllProductsWithBuyer() throws Exception {
-        when(tokenClient.validateToken(any())).thenReturn("BUYER");
+        when(tokenClient.validateToken(any())).thenReturn(BUYER);
         when(productService.getProducts()).thenReturn(getProductList());
         String productJson = getRequest();
         mockMvc.perform(MockMvcRequestBuilders.get("/product/all")
-                        .header("Authorization", "Bearer sampleToken")
+                        .header(AUTHORIZATION, BEARER_SAMPLE_TOKEN)
                 )
                 .andExpect(status().isOk());
     }
@@ -107,7 +107,7 @@ public class ProductControllerTest {
         return product;
     }
 
-    private List<Product> getProductList(){
+    private List<Product> getProductList() {
         List<Product> productList = new ArrayList<>();
         productList.add(getProduct());
         return productList;

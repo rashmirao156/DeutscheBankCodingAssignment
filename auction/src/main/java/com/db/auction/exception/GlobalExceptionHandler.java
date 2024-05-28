@@ -14,8 +14,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ProductServiceException.class)
-    public ResponseEntity<String> handleException(ProductServiceException ex) {
+    public ResponseEntity<String> handleProductServiceException(ProductServiceException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(ProductServiceException ex) {
+        return new ResponseEntity<>("An unknown error occurred.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 

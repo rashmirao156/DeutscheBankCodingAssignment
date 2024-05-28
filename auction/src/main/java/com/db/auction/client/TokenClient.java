@@ -11,11 +11,12 @@ public class TokenClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Value("user.auth.url")
+    @Value("${user.auth.url}")
     private String userAuthServiceUrl;
 
     /**
      * Call User service to validate the token and return user role.
+     *
      * @param token user token
      * @return role.
      */

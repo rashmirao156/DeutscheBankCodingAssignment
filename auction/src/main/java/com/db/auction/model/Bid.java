@@ -9,9 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name ="bid")
-public class Bid
-{
+@Table(name = "bid")
+public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

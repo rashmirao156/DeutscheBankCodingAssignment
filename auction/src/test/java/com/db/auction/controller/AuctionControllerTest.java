@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static com.db.auction.constants.TestConstants.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -35,7 +36,7 @@ public class AuctionControllerTest {
     TokenClient tokenClient;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext).apply(springSecurity())
                 .build();
@@ -43,58 +44,58 @@ public class AuctionControllerTest {
 
     @Test
     public void testSubmitBidAsSeller() throws Exception {
-        when(tokenClient.validateToken(any())).thenReturn("SELLER");
+        when(tokenClient.validateToken(any())).thenReturn(SELLER);
         when(auctionService.submitBid(any())).thenReturn(getBid());
         mockMvc.perform(MockMvcRequestBuilders.post("/auction/bid")
-                        .header("Authorization", "Bearer sampleToken")
+                        .header(AUTHORIZATION, BEARER_SAMPLE_TOKEN)
 
-                        .contentType("application/json")
+                        .contentType(CONTENT_TYPE)
                         .content(getBiddingRequest()))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     public void testSubmitBidAsBuyer() throws Exception {
-        when(tokenClient.validateToken(any())).thenReturn("BUYER");
+        when(tokenClient.validateToken(any())).thenReturn(BUYER);
         when(auctionService.submitBid(any())).thenReturn(getBid());
         mockMvc.perform(MockMvcRequestBuilders.post("/auction/bid")
-                        .header("Authorization", "Bearer sampleToken")
+                        .header(AUTHORIZATION, BEARER_SAMPLE_TOKEN)
 
-                        .contentType("application/json")
+                        .contentType(CONTENT_TYPE)
                         .content(getBiddingRequest()))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testEndAuctionAsBuyer() throws Exception {
-        when(tokenClient.validateToken(any())).thenReturn("BUYER");
+        when(tokenClient.validateToken(any())).thenReturn(BUYER);
         when(productService.UpdateProductStatus(any())).thenReturn(Long.valueOf(1));
         when(auctionService.getHighestBid(any())).thenReturn(getBid());
         mockMvc.perform(MockMvcRequestBuilders.post("/auction/end/1")
-                        .header("Authorization", "Bearer sampleToken")
-                        .contentType("application/json")
+                        .header(AUTHORIZATION, BEARER_SAMPLE_TOKEN)
+                        .contentType(CONTENT_TYPE)
                         .content(getBiddingRequest()))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     public void testEndAuctionAsSeller() throws Exception {
-        when(tokenClient.validateToken(any())).thenReturn("BUYER");
+        when(tokenClient.validateToken(any())).thenReturn(SELLER);
         when(productService.UpdateProductStatus(any())).thenReturn(Long.valueOf(1));
         when(auctionService.getHighestBid(any())).thenReturn(getBid());
         mockMvc.perform(MockMvcRequestBuilders.post("/auction/end/1")
-                        .header("Authorization", "Bearer sampleToken")
-                        .contentType("application/json")
+                        .header(AUTHORIZATION, BEARER_SAMPLE_TOKEN)
+                        .contentType(CONTENT_TYPE)
                         .content(getBiddingRequest()))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isOk());
     }
 
-    private Bid getBid(){
-       return new Bid();
+    private Bid getBid() {
+        return new Bid();
     }
 
-    private  String getBiddingRequest(){
-       return "{    \"id\":\"103\",\n" +
+    private String getBiddingRequest() {
+        return "{    \"id\":\"103\",\n" +
                 "    \"productId\":\"101\",\n" +
                 "    \"biddingPrice\":\"110.0\",\n" +
                 "    \"buyerId\":\"2\",\n" +

@@ -30,8 +30,9 @@ public class TokenProvider {
 
     /**
      * create JWT token.
+     *
      * @param username username.
-     * @param role role.
+     * @param role     role.
      * @return token.
      */
     public String createToken(String username, String role) {
@@ -49,7 +50,8 @@ public class TokenProvider {
     }
 
     /**
-     *  extract username from supplied token.
+     * extract username from supplied token.
+     *
      * @param token token value.
      * @return username.
      */
@@ -58,7 +60,8 @@ public class TokenProvider {
     }
 
     /**
-     *  extract user role from supplied token.
+     * extract user role from supplied token.
+     *
      * @param token
      * @return
      */
@@ -67,7 +70,8 @@ public class TokenProvider {
     }
 
     /**
-     *  validate the token for authenticity and expiry.
+     * validate the token for authenticity and expiry.
+     *
      * @param token token.
      * @return boolean flag.
      * @throws InvalidKeyException e.
@@ -77,7 +81,7 @@ public class TokenProvider {
             Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
-            throw new InvalidTokenException("Expired or invalid JWT token"+e.getMessage());
+            throw new InvalidTokenException("Expired or invalid JWT token" + e.getMessage());
         }
     }
 }

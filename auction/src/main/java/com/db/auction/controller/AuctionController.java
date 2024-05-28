@@ -30,7 +30,7 @@ public class AuctionController {
     private ResponseEntity<String> submitBid(@RequestBody Bid bid) {
         Bid response = auctionService.submitBid(bid);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(String.format("successfully submitted bid with id {}", response.getId()));
+                .body(String.format("successfully submitted bid with id %s", response.getId()));
     }
 
     /**
