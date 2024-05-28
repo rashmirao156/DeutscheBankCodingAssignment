@@ -14,6 +14,22 @@ GDPR requires that PII (TODO) is stored through an independent “Users” serve
 
 ### Architecture
 
+User Service : Handles the user authentication and issues JWT token upon successful authentication. The JWT token issued also contains the user role information.
+
+Auction Service: Provides APIs for Registering a new product for auction and specify minimum bid, submitting bid and ending the auction. Auction service invokes validate token api exposed by user service to validate the JWT token and retrieve user role information. Access to different APIs are permitted or rejected based on the user role.
+For e.g : Only Sellers are able to register a new product for auction.
+
+###Environment
+Java 17 Runtime
+SpringBoot 3
+Spring Security
+JPA
+Embedded H2 database.
+Junit 5 Jupiter for testing.
+
+###Postman collection
+
+The different REST APIs can be tested by importing the collection into POSTMAN(https://www.postman.com/)
 
 
 
