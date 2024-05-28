@@ -16,7 +16,7 @@ GDPR requires that PII (TODO) is stored through an independent “Users” serve
 
 User Service : Handles the user authentication and issues JWT token upon successful authentication. The JWT token issued also contains the user role information.
 
-Auction Service: Provides APIs for Registering a new product for auction and specify minimum bid, submitting bid and ending the auction. Auction service invokes validate token api exposed by user service to validate the JWT token and retrieve user role information. Access to different APIs are permitted or rejected based on the user role.
+Auction Service: Provides APIs for various auction related activatities such as registering a new product for auction and specify minimum bid, submitting bid and ending the auction. Auction service invokes validate token api exposed by user service to validate the JWT token and retrieve user role information. Access to different APIs are permitted or rejected based on the user role.
 For e.g : Only Sellers are able to register a new product for auction.
 
 ### Environment
