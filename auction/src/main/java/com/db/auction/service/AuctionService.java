@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 @Component
 public class AuctionService {
     @Autowired
@@ -18,6 +21,7 @@ public class AuctionService {
      * @return saved bid.
      */
     public Bid submitBid(Bid bid) {
+        bid.setTimestamp(Timestamp.from(Instant.now()));
         return auctionRepository.save(bid);
     }
 

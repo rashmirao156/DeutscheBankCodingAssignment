@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Data
 @Getter
 @Setter
@@ -22,5 +24,6 @@ public class Bid {
     private long buyerId;
     @Column(name = "sellerId")
     private long sellerId;
-
+    @Column(name = "updatedAt")
+    private Timestamp timestamp;
 }
