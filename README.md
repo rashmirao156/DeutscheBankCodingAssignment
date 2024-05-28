@@ -29,8 +29,8 @@ Junit 5 Jupiter for testing.
 
 ###Postman collection
 
-The different REST APIs can be tested by importing the collection into POSTMAN(https://www.postman.com/)
+The different REST APIs can be tested by importing the below collection into POSTMAN(https://www.postman.com/)
 
-
+Link to postman collection https://github.com/rashmirao156/DeutscheBankCodingAssignment/blob/main/DBassessment.postman_collection.json
 
 
